@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-class Header extends Component {
-  renderContent() {
-    switch (this.props.auth) {
+function Header({ auth }) {
+  function renderContent() {
+    switch (auth) {
       case null:
         return;
       case false:
@@ -15,7 +15,7 @@ class Header extends Component {
         );
       default:
         return [
-          <li key="3" style={{ margin: '0 10px' }}>
+          <li key="1">
             <Link to="/blogs">My Blogs</Link>
           </li>,
           <li key="2">
@@ -25,22 +25,18 @@ class Header extends Component {
     }
   }
 
-  render() {
-    return (
-      <nav className="indigo">
-        <div className="nav-wrapper">
-          <Link
-            to={this.props.auth ? '/blogs' : '/'}
-            className="left brand-logo"
-            style={{ marginLeft: '10px' }}
-          >
+  return (
+    <nav>
+      <div className="nav-wrapper indigo">
+        <div className="container">
+          <Link to="/" className="left brand-logo">
             Blogster
           </Link>
-          <ul className="right">{this.renderContent()}</ul>
+          <ul className="right">{renderContent()}</ul>
         </div>
-      </nav>
-    );
-  }
+      </div>
+    </nav>
+  );
 }
 
 function mapStateToProps({ auth }) {

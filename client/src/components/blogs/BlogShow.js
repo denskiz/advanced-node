@@ -1,40 +1,53 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchBlog } from '../../actions';
+import { Link } from 'react-router-dom';
+import './BlogShow.css';
 
-class BlogShow extends Component {
-  componentDidMount() {
-    this.props.fetchBlog(this.props.match.params._id);
-  }
+function BlogShow(props) {
+  useEffect(() => {
+    props.fetchBlog(props.match.params._id);
+  });
 
-  renderImage() {
-    if (this.props.blog.imageUrl) {
+  function renderImage() {
+    if (props.blog.imageUrl) {
       return (
         <img
+          alt={props.blog.imageUrl}
           src={
             'https://s3-ap-southeast-2.amazonaws.com/advanced-node-de/' +
-            this.props.blog.imageUrl
+            props.blog.imageUrl
           }
         />
       );
     }
   }
 
-  render() {
-    if (!this.props.blog) {
-      return '';
-    }
-
-    const { title, content } = this.props.blog;
-
-    return (
-      <div>
-        <h3>{title}</h3>
-        <p>{content}</p>
-        {this.renderImage()}
-      </div>
-    );
+  if (!props.blog) {
+    return '';
   }
+
+  const { title, content } = props.blog;
+
+  return (
+    <div className="container">
+      <div className="row">
+        <div className="col s6">
+          <h3>{title}</h3>
+        </div>
+        <div className="col s6">
+          <Link to="/blogs">
+            {' '}
+            <button className="btn light-blue">Back</button>
+          </Link>
+        </div>
+      </div>
+      <div className="row">
+        <p>{content}</p>
+        {renderImage()}
+      </div>
+    </div>
+  );
 }
 
 function mapStateToProps({ blogs }, ownProps) {

@@ -5,6 +5,7 @@ import BlogList from './blogs/BlogList';
 const Dashboard = () => {
   return (
     <div>
+      <br />
       <BlogList />
       <div className="fixed-action-btn">
         <Link to="/blogs/new" className="btn-floating btn-large red">
